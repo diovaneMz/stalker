@@ -1,23 +1,56 @@
-﻿using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Stalker.ViewModels;
+using Stalker.Views;
 
 namespace Stalker;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
+    private DashboardView? _dashboardView;
+
     public MainWindow()
     {
         InitializeComponent();
+        ShowDashboard();
     }
+
+    private void ShowDashboard()
+    {
+        if (_dashboardView is null)
+        {
+            _dashboardView = new DashboardView();
+            var vm = (DashboardViewModel)_dashboardView.DataContext;
+            vm.RequestNavigateToDetail += game => NavigateTo(new GameDetailView(game, ShowDashboard));
+            vm.RequestAddGame += ShowAddGameDialog;
+        }
+        NavigateTo(_dashboardView);
+    }
+
+    private void ShowAddGameDialog()
+    {
+        var dialog = new AddGameDialog { Owner = this };
+        if (dialog.ShowDialog() == true)
+        {
+            var vm = (DashboardViewModel)_dashboardView!.DataContext;
+            vm.AddNewGame(dialog.ViewModel.GameName, dialog.ViewModel.ExecutableName);
+        }
+    }
+
+    private void NavigateTo(object view) => MainContent.Content = view;
+
+    private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        => DragMove();
+
+    private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        => WindowState = WindowState.Minimized;
+
+    private void CloseButton_Click(object sender, RoutedEventArgs e)
+        => Close();
+
+    private void NavDashboard_Click(object sender, RoutedEventArgs e)
+        => ShowDashboard();
+
+    private void NavSettings_Click(object sender, RoutedEventArgs e)
+        => NavigateTo(new SettingsView());
 }

@@ -1,0 +1,79 @@
+<Window x:Class="Stalker.Views.AddGameDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Adicionar Jogo"
+        Width="420" Height="280"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+
+    <Border Background="{StaticResource SurfaceBrush}"
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="12">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="44"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title bar -->
+            <Border Grid.Row="0" CornerRadius="12,12,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid Margin="16,0">
+                    <TextBlock Text="Adicionar Jogo" FontSize="14" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               VerticalAlignment="Center"/>
+                    <Button Content="&#x2715;" Width="28" Height="28"
+                            Style="{StaticResource GhostButton}"
+                            Padding="0" FontSize="13"
+                            Foreground="#EF4444"
+                            Command="{Binding CancelCommand}"
+                            HorizontalAlignment="Right"/>
+                </Grid>
+            </Border>
+
+            <!-- Form -->
+            <StackPanel Grid.Row="1" Margin="20,8,20,20">
+
+                <TextBlock Text="Nome do jogo" FontSize="12"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           Margin="0,0,0,6"/>
+                <Border Style="{StaticResource InputBorder}" Height="36" Margin="0,0,0,16">
+                    <TextBox Style="{StaticResource SearchBox}"
+                             Text="{Binding GameName, UpdateSourceTrigger=PropertyChanged}"/>
+                </Border>
+
+                <TextBlock FontSize="12" Margin="0,0,0,6"
+                           Foreground="{StaticResource TextSecondaryBrush}">
+                    <Run Text="Nome do executável"/>
+                    <Run Text="  (ex: eldenring.exe)" Foreground="#666680"/>
+                </TextBlock>
+                <Border Style="{StaticResource InputBorder}" Height="36" Margin="0,0,0,20">
+                    <TextBox Style="{StaticResource SearchBox}"
+                             Text="{Binding ExecutableName, UpdateSourceTrigger=PropertyChanged}"/>
+                </Border>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Content="Cancelar"
+                            Style="{StaticResource GhostButton}"
+                            Command="{Binding CancelCommand}"
+                            Height="36" Margin="0,0,6,0"/>
+
+                    <Button Grid.Column="1" Content="Adicionar"
+                            Style="{StaticResource AccentButton}"
+                            Command="{Binding ConfirmCommand}"
+                            Height="36" Margin="6,0,0,0"/>
+                </Grid>
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
