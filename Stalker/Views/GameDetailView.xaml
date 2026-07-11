@@ -8,18 +8,29 @@
     <ScrollViewer>
         <StackPanel Margin="20">
 
-            <!-- Back button -->
-            <Button Style="{StaticResource GhostButton}"
-                    Command="{Binding GoBackCommand}"
-                    HorizontalAlignment="Left"
-                    Padding="8,6"
-                    Margin="0,0,0,16">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="&#xE76B;" FontFamily="Segoe MDL2 Assets" FontSize="12"
-                               VerticalAlignment="Center" Margin="0,0,6,0"/>
-                    <TextBlock Text="Voltar" FontSize="13" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
+            <Grid Margin="0,0,0,16">
+                <!-- Back button -->
+                <Button Style="{StaticResource GhostButton}"
+                        Command="{Binding GoBackCommand}"
+                        HorizontalAlignment="Left"
+                        Padding="8,6">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE76B;" FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                   VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock Text="Voltar" FontSize="13" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource DangerButton}"
+                        Command="{Binding DeleteGameCommand}"
+                        HorizontalAlignment="Right"
+                        ToolTip="Excluir jogo"
+                        Padding="8,6">
+                    <TextBlock Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                               VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
+
 
             <!-- Header -->
             <Grid Margin="0,0,0,24">

@@ -67,6 +67,9 @@ public partial class DashboardViewModel : BaseViewModel
             ExecutableName = executableName
         };
         Games.Add(new GameItemViewModel(game));
+        
+        _repo.AddGameAsync(game);
+        
         ApplyFilter();
     }
     
