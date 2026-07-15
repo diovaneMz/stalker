@@ -14,6 +14,6 @@ public class Game
     public DateTime? PlatinumAt { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
+    public bool Removed { get; set; } = false;
     public List<Session> Sessions { get; set; } = [];
 }

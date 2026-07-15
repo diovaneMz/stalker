@@ -5,13 +5,16 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using Stalker.Data;
 
 namespace Stalker.ViewModels;
 
 public partial class GameDetailViewModel : BaseViewModel
 {
+    private readonly IGameRepository _gameRepository = App.Repository;
     private readonly Action _goBack;
 
+    [ObservableProperty] private int _gameId ;
     [ObservableProperty] private string _gameName = string.Empty;
     [ObservableProperty] private string _totalPlayTime = string.Empty;
     [ObservableProperty] private string _lastPlayed = string.Empty;
@@ -44,6 +47,13 @@ public partial class GameDetailViewModel : BaseViewModel
     private void GoBack() => _goBack();
 
     [RelayCommand]
+    private async Task DeleteGame(int id)
+    {
+        await _gameRepository.DeleteGameAsync(id);
+        GoBack();
+    } 
+    
+    [RelayCommand]
     private void MarkCompleted()
     {
         CompletedAt = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
@@ -59,6 +69,7 @@ public partial class GameDetailViewModel : BaseViewModel
 
     private void LoadFromGame(GameItemViewModel game)
     {
+        GameId = game.Id;
         GameName = game.Name;
         TotalPlayTime = game.TotalPlayTimeFormatted;
         LastPlayed = game.LastPlayedFormatted;

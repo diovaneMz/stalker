@@ -23,6 +23,7 @@
 
                 <Button Style="{StaticResource DangerButton}"
                         Command="{Binding DeleteGameCommand}"
+                        CommandParameter="{Binding GameId}"
                         HorizontalAlignment="Right"
                         ToolTip="Excluir jogo"
                         Padding="8,6">

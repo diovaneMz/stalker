@@ -49,13 +49,14 @@
                 <TextBox Style="{StaticResource SearchBox}"
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
             </Border>
-            <TextBlock Text="&#xE721; Buscar jogos..."
-                       FontFamily="Segoe MDL2 Assets, Segoe UI"
+            <TextBlock 
                        Foreground="{StaticResource TextSecondaryBrush}"
                        FontSize="13"
                        IsHitTestVisible="False"
                        VerticalAlignment="Center"
                        Margin="14,0,0,0">
+                <Run Text="&#xE721; " FontFamily="Segoe MDL2 Assets"/> 
+                <Run Text="Buscar Jogos... " FontFamily="Segoe UI"/> 
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Setter Property="Visibility" Value="Collapsed"/>
