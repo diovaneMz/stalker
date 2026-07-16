@@ -13,6 +13,7 @@ public partial class GameDetailViewModel : BaseViewModel
 {
     private readonly IGameRepository _gameRepository = App.Repository;
     private readonly Action _goBack;
+    public event Action? GameDeleted;
 
     [ObservableProperty] private int _gameId ;
     [ObservableProperty] private string _gameName = string.Empty;
@@ -50,7 +51,7 @@ public partial class GameDetailViewModel : BaseViewModel
     private async Task DeleteGame(int id)
     {
         await _gameRepository.DeleteGameAsync(id);
-        GoBack();
+        GameDeleted?.Invoke();
     } 
     
     [RelayCommand]
@@ -120,3 +121,4 @@ public class SessionItemViewModel
     public string Date { get; set; } = string.Empty;
     public string Duration { get; set; } = string.Empty;
 }
+

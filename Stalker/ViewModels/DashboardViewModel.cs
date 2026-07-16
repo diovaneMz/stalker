@@ -58,32 +58,33 @@ public partial class DashboardViewModel : BaseViewModel
         RequestNavigateToDetail?.Invoke(game);
     }
     
-    public void AddNewGame(string name, string executableName)
+    public async Task AddNewGame(string name, string executableName)
     {
         var game = new Game
         {
-            Id = Games.Count + 1,
             Name = name,
             ExecutableName = executableName
         };
-        Games.Add(new GameItemViewModel(game));
-        
-        _repo.AddGameAsync(game);
-        
+
+        Game saved = await _repo.AddGameAsync(game);
+
+        Games.Add(new GameItemViewModel(saved));
         ApplyFilter();
     }
-    
+
     private async Task LoadGamesAsync()
     {
         List<Game> games = await _repo.GetAllGamesAsync();
-    
-        foreach (var game in games)
-        {
-            GameItemViewModel newGame = new GameItemViewModel(game);
 
-            AddNewGame(newGame.Name, newGame.ExecutableName);
-        }
-        
+        foreach (Game game in games)
+            Games.Add(new GameItemViewModel(game));
+
+        ApplyFilter();
+    }
+
+    public void RemoveGame(GameItemViewModel? game)
+    {
+        Games.Remove(game);
         ApplyFilter();
     }
 }

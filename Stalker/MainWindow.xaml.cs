@@ -21,19 +21,30 @@ public partial class MainWindow : Window
         {
             _dashboardView = new DashboardView();
             var vm = (DashboardViewModel)_dashboardView.DataContext;
-            vm.RequestNavigateToDetail += game => NavigateTo(new GameDetailView(game, ShowDashboard));
+            vm.RequestNavigateToDetail += game =>
+            {
+                var detail = new GameDetailView(game, ShowDashboard);
+                var detailVm = (GameDetailViewModel)detail.DataContext;
+                detailVm.GameDeleted += () =>
+                {
+                    vm.RemoveGame(game);
+                    ShowDashboard();
+                };
+                NavigateTo(detail);
+            };
             vm.RequestAddGame += ShowAddGameDialog;
         }
+
         NavigateTo(_dashboardView);
     }
 
-    private void ShowAddGameDialog()
+    private async void ShowAddGameDialog()
     {
         var dialog = new AddGameDialog { Owner = this };
         if (dialog.ShowDialog() == true)
         {
             var vm = (DashboardViewModel)_dashboardView!.DataContext;
-            vm.AddNewGame(dialog.ViewModel.GameName, dialog.ViewModel.ExecutableName);
+            await vm.AddNewGame(dialog.ViewModel.GameName, dialog.ViewModel.ExecutableName);
         }
     }
 

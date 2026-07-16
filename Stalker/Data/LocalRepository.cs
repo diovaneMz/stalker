@@ -49,14 +49,9 @@ public class LocalRepository : IGameRepository
                        .FirstOrDefaultAsync(g => g.Id == id)
                    ?? throw new KeyNotFoundException();
 
-        Game gameToDelete = game;
-        gameToDelete.Removed = true;
-
-        _db.Games.Update(gameToDelete);
-
+        game.Removed = true;
         await _db.SaveChangesAsync();
 
-        await GetAllGamesAsync();
         return game;
     }
 
